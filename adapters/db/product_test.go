@@ -1,8 +1,11 @@
-package db
+package db_test
 
 import (
 	"database/sql"
+	"github.com/loxt/fullcycle2.0-ports-and-adapters/adapters/db"
+	"github.com/stretchr/testify/require"
 	"log"
+	"testing"
 )
 
 var Db *sql.DB
@@ -35,4 +38,18 @@ func createProduct(db *sql.DB) {
 		log.Fatal(err.Error())
 	}
 	_, _ = stmt.Exec()
+}
+
+func TestProductDb_Get(t *testing.T) {
+	setUp()
+	defer Db.Close()
+
+	productDb := db.NewProductDb(Db)
+
+	product, err := productDb.Get("abc")
+	require.Nil(t, err)
+
+	require.Equal(t, "Product Test", product.GetName())
+	require.Equal(t, float64(0), product.GetPrice())
+	require.Equal(t, "disabled", product.GetStatus())
 }
