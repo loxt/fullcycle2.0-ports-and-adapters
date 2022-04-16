@@ -38,12 +38,10 @@ func (s *ProductService) Enable(product ProductInterface) (ProductInterface, err
 	if err != nil {
 		return &Product{}, err
 	}
-
 	result, err := s.Persistence.Save(product)
 	if err != nil {
 		return &Product{}, err
 	}
-
 	return result, nil
 }
 
