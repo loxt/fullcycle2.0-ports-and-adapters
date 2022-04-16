@@ -77,5 +77,4 @@ func TestProductDb_Save(t *testing.T) {
 
 	require.Nil(t, err)
 	require.Equal(t, product.Status, productResult.GetStatus())
-
 }
