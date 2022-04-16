@@ -13,5 +13,4 @@ func main() {
 	product, _ := productService.Create("test", 30)
 
 	_, _ = productService.Enable(product)
-
 }
