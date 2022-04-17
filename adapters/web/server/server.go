@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/loxt/fullcycle2.0-ports-and-adapters/adapters/web/handler"
 	"github.com/loxt/fullcycle2.0-ports-and-adapters/application"
 	"github.com/urfave/negroni"
 	"log"
@@ -18,9 +19,12 @@ func MakeNewWebServer() *WebServer {
 	return &WebServer{}
 }
 
-func (s *WebServer) Serve() {
+func (w *WebServer) Serve() {
 	r := mux.NewRouter()
 	n := negroni.New(negroni.NewLogger())
+
+	handler.MakeProductHandlers(r, n, w.Service)
+	http.Handle("/", r)
 
 	server := &http.Server{
 		Addr:              ":8080",
